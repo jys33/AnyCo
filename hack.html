@@ -1,0 +1,38 @@
+<!--9.3 Preventing CSRF
+Actualmente, el formulario es propenso a ataques de falsificación de solicitudes entre sitios (CSRF), donde otro sitio puede aprovechar su inicio de sesión y hacer que envíe datos o realice alguna otra operación privilegiada.
+
+Para mostrar esto, cree una nueva página HTML llamada hack.html:
+
+Cambie la URL de acción del formulario HTML para que coincida con su sistema.
+
+Ejecute la aplicación AnyCo en un navegador e inicie sesión como administrador. En una nueva pestaña o ventana del navegador, abra el siguiente archivo:
+
+http: //localhost/hack.html
+
+Ostensiblemente para la persona que mira la página no tiene nada que ver con la aplicación AnyCo.-->
+
+<html>
+<!-- hack.html: Show issues with CSRF -->
+<body>
+<h1>Make Millions!</h1>
+<form method='post' action='http://localhost/ac_add_one.php'>
+<div>
+    Do you dream of being rich?<br>
+    <input type="hidden" name="equip" value="fish">
+    <input type="hidden" name="empid" value="100">
+    <input type="submit" value="Win">
+</div>
+</form>
+
+<p>
+	Ahora haz clic en Win.
+
+	Esta vez, la protección CSRF en printcontent () no encuentra un token CSRF en el formulario enviado y lo redirige a la página de inicio de sesión, index.php, que cierra la sesión. Vuelva a iniciar sesión en la aplicación AnyCo y verifique que la lista de equipos de Steven King no haya cambiado, sin una segunda entrada para peces. Para que hack.html tenga éxito, tendría que conocer el valor del campo csrftoken que se almacena en la sesión PHP cuando ac_add_one.php genera el formulario de entrada real.
+
+	La protección CSRF es solo uno de los muchos tipos de restricciones de seguridad que las aplicaciones web deben aplicar. Debe realizar una evaluación de seguridad exhaustiva de cualquier código que implemente en la web.
+
+	Muchos de los marcos PHP populares proporcionan asistencia para reducir la cantidad de esfuerzo requerido para producir una aplicación segura. Por ejemplo, pueden proporcionar una implementación más segura de la generación de tokens CSRF que la de la clase AnyCo Session.
+</p>
+ 
+</body>
+</html>
